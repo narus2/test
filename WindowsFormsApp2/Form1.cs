@@ -13,6 +13,26 @@ namespace WindowsFormsApp2
 {
     public partial class Form1 : Form
     {
+        DataTable dTable = new DataTable();
+        String GroupColums = "";
+        String conStr = null;
+        String text = "SELECT * FROM Sales ";
+
+        private void setDataSourse(String text)
+        {
+            OleDbConnection connection = new OleDbConnection(conStr);
+            OleDbDataAdapter adapter = new OleDbDataAdapter(text, connection);
+            BindingSource bSource = new BindingSource();
+            dTable.Clear();
+            adapter.Fill(dTable);
+            bSource.DataSource = dTable;
+            
+            dataGridView.DataSource = bSource;
+            
+            adapter.Update(dTable);
+
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -27,19 +47,20 @@ namespace WindowsFormsApp2
                 sql_base = iniFile.ReadINI("SQL_Config", "Base");
                 sql_server = iniFile.ReadINI("SQL_Config", "Server");
             }
+            conStr = "Provider=SQLNCLI11;Data Source=" + sql_server + ";Integrated Security=SSPI;Initial Catalog=" + sql_base;
 
-            string conStr = "Provider=SQLNCLI11;Data Source="+ sql_server + ";Integrated Security=SSPI;Initial Catalog="+ sql_base;
-            OleDbConnection connection = new OleDbConnection(conStr);
-            OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT * FROM Sales", connection);
+            setDataSourse(text);
 
-            BindingSource bSource = new BindingSource();
-            DataTable dTable = new DataTable();
-
-            adapter.Fill(dTable);
-            bSource.DataSource = dTable;
-            dataGridView.DataSource = bSource;
-
-            adapter.Update(dTable);
+            foreach ( DataColumn tableColumn in dTable.Columns) {
+                if (tableColumn.DataType == typeof(string) | tableColumn.DataType == typeof(DateTime))
+                {
+                    listColums.Items.Add(tableColumn.ColumnName);
+                }
+                else {
+                    if (GroupColums != string.Empty ) {GroupColums += ", ";}
+                    GroupColums += "count(" + tableColumn.ColumnName + ") as " + tableColumn.ColumnName;
+                }
+            }
 
         }
 
@@ -52,68 +73,33 @@ namespace WindowsFormsApp2
 
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+ 
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void listColums_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            
-        }
+            ListView.CheckedListViewItemCollection items = listColums.CheckedItems;
+            String where = "";
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            OleDbCommand command = new OleDbCommand(
-               "UPDATE Sales SET DateDoc = @DateDoc, Firm = @Firm, City = @City, Contry = @Contry, Manager = @Manager," +
-               " Counts = @Count, Sums =  @Sum WHERE (ID = @ID)");
-            
-            
+            for (int ind = 0; ind < items.Count; ind++)
+            {
+                 if (where != String.Empty){ where += " ,"; }
+                where += items[ind].Text; 
+            }
 
-            //Параметр ID
-            OleDbParameter parametr = new OleDbParameter("@ID", SqlDbType.Int);
-            parametr.SourceColumn = "ID";
-            command.Parameters.Add(parametr);
+            if (where == String.Empty)
+            {
+                setDataSourse(text);
+            }
+            else {
+                String textGr = "Select " + where + ", " + GroupColums + " from Sales group by " + where;
+                setDataSourse(textGr);
 
-            OleDbParameter Firm = new OleDbParameter("@Firm", DbType.Single);
-            parametr.SourceColumn = "Firm";
-            command.Parameters.Add(Firm);
-
-            OleDbParameter City = new OleDbParameter("@City", SqlDbType.NChar);
-            parametr.SourceColumn = "City";
-            command.Parameters.Add(City);
-
-            OleDbParameter Contry = new OleDbParameter("@Contry", SqlDbType.NChar);
-            parametr.SourceColumn = "Contry";
-            command.Parameters.Add(Contry);
-
-            OleDbParameter Manager = new OleDbParameter("@Manager", SqlDbType.NChar);
-            parametr.SourceColumn = "Manager";
-            command.Parameters.Add(Manager);
-
-            OleDbParameter Count = new OleDbParameter("@Count", SqlDbType.NChar);
-            parametr.SourceColumn = "Counts";
-            command.Parameters.Add(Count);
-
-            OleDbParameter Sum = new OleDbParameter("@Sum", SqlDbType.Float);
-            parametr.SourceColumn = "Sums";
-            command.Parameters.Add(Sum);
-
-            OleDbParameter DateDoc = new OleDbParameter("@DateDoc", SqlDbType.Date);
-            parametr.SourceColumn = "DateDoc";
-            command.Parameters.Add(DateDoc);
-
-            command.Connection = salesTableAdapter.Connection;
-            salesTableAdapter.Adapter.UpdateCommand = command;
-
-            salesTableAdapter.Update(dataSet1.Sales);
-
-            
-        }
-
-        private void buttonUpdate_Click(object sender, EventArgs e)
-        {
-            dataGridView.Refresh();
+            }
         }
     }
 }
