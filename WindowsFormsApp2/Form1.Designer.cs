@@ -30,6 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.salesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataSet1 = new WindowsFormsApp2.DataSet1();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.salesTableAdapter = new WindowsFormsApp2.DataSet1TableAdapters.SalesTableAdapter();
+            this.listColums = new System.Windows.Forms.ListView();
             this.DateDoc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Firm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.City = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -37,18 +42,6 @@
             this.Manager = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Counts = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sums = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.firmDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.managerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sumsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateDocDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.salesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dataSet1 = new WindowsFormsApp2.DataSet1();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.salesTableAdapter = new WindowsFormsApp2.DataSet1TableAdapters.SalesTableAdapter();
-            this.listColums = new System.Windows.Forms.ListView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
@@ -68,14 +61,7 @@
             this.Contry,
             this.Manager,
             this.Counts,
-            this.Sums,
-            this.firmDataGridViewTextBoxColumn,
-            this.cityDataGridViewTextBoxColumn,
-            this.contryDataGridViewTextBoxColumn,
-            this.managerDataGridViewTextBoxColumn,
-            this.countsDataGridViewTextBoxColumn,
-            this.sumsDataGridViewTextBoxColumn,
-            this.dateDocDataGridViewTextBoxColumn});
+            this.Sums});
             this.dataGridView.DataSource = this.salesBindingSource;
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView.Location = new System.Drawing.Point(13, 60);
@@ -84,6 +70,40 @@
             this.dataGridView.Size = new System.Drawing.Size(625, 327);
             this.dataGridView.TabIndex = 0;
             this.dataGridView.VirtualMode = true;
+            // 
+            // salesBindingSource
+            // 
+            this.salesBindingSource.DataMember = "Sales";
+            this.salesBindingSource.DataSource = this.dataSet1;
+            // 
+            // dataSet1
+            // 
+            this.dataSet1.DataSetName = "DataSet1";
+            this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 390);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(834, 22);
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // salesTableAdapter
+            // 
+            this.salesTableAdapter.ClearBeforeFill = true;
+            // 
+            // listColums
+            // 
+            this.listColums.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listColums.CheckBoxes = true;
+            this.listColums.Location = new System.Drawing.Point(644, 60);
+            this.listColums.Name = "listColums";
+            this.listColums.Size = new System.Drawing.Size(187, 327);
+            this.listColums.TabIndex = 2;
+            this.listColums.UseCompatibleStateImageBehavior = false;
+            this.listColums.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listColums_ItemChecked);
             // 
             // DateDoc
             // 
@@ -127,82 +147,6 @@
             this.Sums.HeaderText = "Sums";
             this.Sums.Name = "Sums";
             // 
-            // firmDataGridViewTextBoxColumn
-            // 
-            this.firmDataGridViewTextBoxColumn.DataPropertyName = "Firm";
-            this.firmDataGridViewTextBoxColumn.HeaderText = "Firm";
-            this.firmDataGridViewTextBoxColumn.Name = "firmDataGridViewTextBoxColumn";
-            // 
-            // cityDataGridViewTextBoxColumn
-            // 
-            this.cityDataGridViewTextBoxColumn.DataPropertyName = "City";
-            this.cityDataGridViewTextBoxColumn.HeaderText = "City";
-            this.cityDataGridViewTextBoxColumn.Name = "cityDataGridViewTextBoxColumn";
-            // 
-            // contryDataGridViewTextBoxColumn
-            // 
-            this.contryDataGridViewTextBoxColumn.DataPropertyName = "Contry";
-            this.contryDataGridViewTextBoxColumn.HeaderText = "Contry";
-            this.contryDataGridViewTextBoxColumn.Name = "contryDataGridViewTextBoxColumn";
-            // 
-            // managerDataGridViewTextBoxColumn
-            // 
-            this.managerDataGridViewTextBoxColumn.DataPropertyName = "Manager";
-            this.managerDataGridViewTextBoxColumn.HeaderText = "Manager";
-            this.managerDataGridViewTextBoxColumn.Name = "managerDataGridViewTextBoxColumn";
-            // 
-            // countsDataGridViewTextBoxColumn
-            // 
-            this.countsDataGridViewTextBoxColumn.DataPropertyName = "Counts";
-            this.countsDataGridViewTextBoxColumn.HeaderText = "Counts";
-            this.countsDataGridViewTextBoxColumn.Name = "countsDataGridViewTextBoxColumn";
-            // 
-            // sumsDataGridViewTextBoxColumn
-            // 
-            this.sumsDataGridViewTextBoxColumn.DataPropertyName = "Sums";
-            this.sumsDataGridViewTextBoxColumn.HeaderText = "Sums";
-            this.sumsDataGridViewTextBoxColumn.Name = "sumsDataGridViewTextBoxColumn";
-            // 
-            // dateDocDataGridViewTextBoxColumn
-            // 
-            this.dateDocDataGridViewTextBoxColumn.DataPropertyName = "DateDoc";
-            this.dateDocDataGridViewTextBoxColumn.HeaderText = "DateDoc";
-            this.dateDocDataGridViewTextBoxColumn.Name = "dateDocDataGridViewTextBoxColumn";
-            // 
-            // salesBindingSource
-            // 
-            this.salesBindingSource.DataMember = "Sales";
-            this.salesBindingSource.DataSource = this.dataSet1;
-            // 
-            // dataSet1
-            // 
-            this.dataSet1.DataSetName = "DataSet1";
-            this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 390);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(834, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // salesTableAdapter
-            // 
-            this.salesTableAdapter.ClearBeforeFill = true;
-            // 
-            // listColums
-            // 
-            this.listColums.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listColums.CheckBoxes = true;
-            this.listColums.Location = new System.Drawing.Point(644, 60);
-            this.listColums.Name = "listColums";
-            this.listColums.Size = new System.Drawing.Size(187, 327);
-            this.listColums.TabIndex = 2;
-            this.listColums.UseCompatibleStateImageBehavior = false;
-            this.listColums.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listColums_ItemChecked);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -229,6 +173,7 @@
         private System.Windows.Forms.BindingSource salesBindingSource;
         private DataSet1TableAdapters.SalesTableAdapter salesTableAdapter;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ListView listColums;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateDoc;
         private System.Windows.Forms.DataGridViewTextBoxColumn Firm;
         private System.Windows.Forms.DataGridViewTextBoxColumn City;
@@ -236,14 +181,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Manager;
         private System.Windows.Forms.DataGridViewTextBoxColumn Counts;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sums;
-        private System.Windows.Forms.DataGridViewTextBoxColumn firmDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cityDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn contryDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn managerDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn countsDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sumsDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dateDocDataGridViewTextBoxColumn;
-        private System.Windows.Forms.ListView listColums;
     }
 }
 

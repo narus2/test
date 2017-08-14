@@ -58,7 +58,7 @@ namespace WindowsFormsApp2
                 }
                 else {
                     if (GroupColums != string.Empty ) {GroupColums += ", ";}
-                    GroupColums += "count(" + tableColumn.ColumnName + ") as " + tableColumn.ColumnName;
+                    GroupColums += "sum(" + tableColumn.ColumnName + ") as " + tableColumn.ColumnName;
                 }
             }
 
